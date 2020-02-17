@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: S3 bucket for CFN training
+
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: cloudformation-training-nirdosh
+
+Outputs:
+  BucketName:
+    Description: Training bucket name
+    Value: !Ref S3Bucket
+    Export:
+      Name: my-bucket-name
