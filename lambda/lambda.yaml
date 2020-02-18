@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Sample SAM Template for sam-app
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  LambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs10.x
+      Events:
+        ReadFile:
+          Type: Api
+          Properties:
+            Path: /file
+            Method: get
+
+Outputs:
+  LambdaAPI:
+    Description: "API Gateway endpoint URL for Prod stage for this function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/file/"
+  LambdaFunction:
+    Description: " Lambda Function ARN"
+    Value: !GetAtt LambdaFunction.Arn
+  LambdaIamRole:
+    Description: "Implicit IAM Role created for this function"
+    Value: !GetAtt LambdaFunctionRole.Arn
