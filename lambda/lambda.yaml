@@ -13,6 +13,24 @@ Resources:
     Properties:
       Handler: index.handler
       Runtime: nodejs10.x
+      Environment:
+        Variables:
+          BUCKET_NAME: !ImportValue training-bucket-nirdosh
+      Policies:
+        - AWSLambdaExecute # Managed Policy
+        - Version: '2012-10-17' # Policy Document
+          Statement:
+            - Effect: Allow
+              Action:
+                - s3:GetObject
+              # Resource: !Sub 'arn:aws:s3:::training-bucket-nirdosh/*'
+              Resource:
+              - !Join
+                - ''
+                - - 'arn:aws:s3:::'
+                  - !ImportValue training-bucket-nirdosh
+                  - '/*'
+
       Events:
         ReadFile:
           Type: Api
