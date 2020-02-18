@@ -1,22 +1,25 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: S3 bucket for CFN training
 
+# dynamic values can be passed as parameters
 Parameters:
   BucketName:
     Type: String
-    # Default: cloudformation-training-nirdosh
     Description: Training bucket name
 
+# resources are the only required property in a CFN template
+# they can be one or many
 Resources:
   S3Bucket:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref BucketName
 
+# we can export key values so that other stacks can use them
+# the export name must be unique in the same region
 Outputs:
   TrainingBucket:
     Description: Training bucket name
     Value: !Ref S3Bucket
     Export:
-      Name: my-bucket-name
-
+      Name: training-bucket-nirdosh
